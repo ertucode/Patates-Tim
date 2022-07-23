@@ -1,0 +1,37 @@
+.streamer {
+    display: flex;
+    width: 175px;
+    justify-content: space-between;
+    font-size: .75rem;
+    font-weight: normal;
+}
+
+.header {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.streamer-remover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+}
+
+#mode-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5rem;
+}
+
+#disable-streamers {
+    margin-bottom: 1rem;
+}
+
+.streamer-container {
+    margin-bottom: .5rem;
+}
