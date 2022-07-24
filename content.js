@@ -32,10 +32,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-if (!location.href.startsWith("https://www.youtube.com/watch")) {
-    inform(location.href)    
-    throw "stop execution"
-}
 
 
 let channelContainer = null
