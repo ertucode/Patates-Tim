@@ -1,69 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Patates Tim Options</title>
-    <script src="popup.js" type="module"></script>
-    <link rel="stylesheet" href="popup_styles.css" />
-  </head>
-  <body>
-    <div id="mode-container">
-      <label class="mode-label">
-        <input
-          type="radio"
-          name="mode"
-          id="only-watch-radio"
-          value="only-watch-mode"
-        />
-        <span>Only watch mode</span>
-      </label>
-      <label class="mode-label">
-        <input
-          type="radio"
-          name="mode"
-          id="disable-radio"
-          value="disable-mode"
-        />
-        <span>Disable mode</span>
-      </label>
-      <label class="mode-label">
-        <input type="radio" name="mode" id="no-mode-radio" value="no-mode" />
-        <span>No action</span>
-      </label>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Patates Tim Options</title>
+		<script src="/utils/logic_handler.js" type="module"></script>
+		<link rel="stylesheet" href="popup_styles.css" />
+	</head>
+	<body>
+		<div id="mode-container">
+			<label class="mode-label">
+				<input
+					type="radio"
+					name="mode"
+					id="only-watch-radio"
+					value="only-watch-mode"
+				/>
+				<span>Only watch mode</span>
+			</label>
+			<label class="mode-label">
+				<input
+					type="radio"
+					name="mode"
+					id="disable-radio"
+					value="disable-mode"
+				/>
+				<span>Disable mode</span>
+			</label>
+			<label class="mode-label">
+				<input
+					type="radio"
+					name="mode"
+					id="no-mode-radio"
+					value="no-mode"
+				/>
+				<span>No action</span>
+			</label>
+		</div>
 
-    <div id="skip-container">
-      <label class="skip-label">
-        <input type="checkbox" id="skip-intro" />
-        <span>Skip intro</span>
-      </label>
-      <label class="skip-label">
-        <input type="checkbox" id="skip-outro" />
-        <span>Skip outro</span>
-      </label>
-    </div>
+		<div id="skip-container">
+			<label class="skip-label">
+				<input type="checkbox" id="skip-intro" />
+				<span>Skip intro</span>
+			</label>
+			<label class="skip-label">
+				<input type="checkbox" id="skip-outro" />
+				<span>Skip outro</span>
+			</label>
+		</div>
 
-    <div class="header" id="disable-streamers">
-      Disabled streamers
+		<div class="header" id="disable-streamers">
+			Disabled streamers
 
-      <div class="streamer-container" id="disabled-streamers"></div>
+			<div class="streamer-container" id="disabled-streamers"></div>
 
-      <label class="enable-label">
-        <input type="text" id="disable-streamer-name-input" />
-        <button id="disable-streamer-button">Disable streamer</button>
-      </label>
-    </div>
-    <div class="header" id="enable-streamers">
-      Only watch these streamers
+			<label class="enable-label">
+				<input type="text" id="disable-streamer-name-input" />
+				<button id="disable-streamer-button">Disable streamer</button>
+			</label>
+		</div>
+		<div class="header" id="enable-streamers">
+			Only watch these streamers
 
-      <div class="streamer-container" id="only-watch-streamers"></div>
+			<div class="streamer-container" id="only-watch-streamers"></div>
 
-      <label class="disable-label">
-        <input type="text" id="only-watch-streamer-name-input" />
-        <button id="only-watch-streamer-button">Enable streamer</button>
-      </label>
-    </div>
-  </body>
+			<label class="disable-label">
+				<input type="text" id="only-watch-streamer-name-input" />
+				<button id="only-watch-streamer-button">Enable streamer</button>
+			</label>
+		</div>
+	</body>
 </html>

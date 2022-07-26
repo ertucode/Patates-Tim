@@ -1,0 +1,39 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.streamer {
+    display: flex;
+    width: 175px;
+    justify-content: space-between;
+    font-weight: normal;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.streamer-remover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+}
+
+.header.blur {
+    filter: blur(5px);
+}
+
+.header.blur::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
