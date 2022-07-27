@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Patates Tim",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Watch what you want",
     "icons": {
         "128": "icons/icon128.png",
@@ -9,7 +9,7 @@
         "16": "icons/icon16.png"
     },
 
-    "options_page": "options/options.html",
+    "options_page": "popup.html",
 
     "background": {
         "service_worker": "background.js"
@@ -17,11 +17,7 @@
 
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
-        "js": ["content/utils/fireKey.js", "content/utils/formatTime.js",
-        "content/utils/getElement.js", "content/utils/getIndexOfOptions.js",
-         "content/utils/log.js", "content/utils/setItem.js",
-         "content/utils/sleep.js", "content/utils/zip.js","content/keys.js",
-         "content/load_storage.js","content/content.js"]
+        "js": ["content.js"]
     }],
 
     "permissions": [
@@ -32,7 +28,7 @@
         "scripting"
     ],
     "action": {
-        "default_popup": "popup/popup.html"
+        "default_popup": "popup.html"
     }
 }
 

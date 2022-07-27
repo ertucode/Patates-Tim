@@ -1,4 +1,4 @@
-function* zip(...iterables) {
+export default function* zip(...iterables) {
 	let iterators = iterables.map((i) => i[Symbol.iterator]());
 	while (true) {
 		let results = iterators.map((iter) => iter.next());

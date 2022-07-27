@@ -1,7 +1,9 @@
-import loadStorage from "./load_storage.js";
-import setItem from "./set_storage.js";
-import STORAGE_KEY from "./keys.js";
-import loadLogCheckboxes from "./logging_logic.js";
+import "./css/popup-styles.css";
+
+import loadStorage from "./utils/loadStorage.js";
+import setItem from "./utils/setItem.js";
+import STORAGE_KEY from "./utils/keys.js";
+import loadLogCheckboxes from "./utils/loadLogCheckboxes.js";
 
 const disableContainer = document.querySelector("#disabled-streamers");
 const onlyWatchContainer = document.querySelector("#only-watch-streamers");
@@ -41,6 +43,7 @@ let onlyWatchStreamers = [];
 let mode = null;
 let skipIntro;
 let skipOutro;
+
 
 loadStorage().then(updateItemsAccordingToStorageData);
 loadLogCheckboxes();

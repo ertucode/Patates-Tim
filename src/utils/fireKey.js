@@ -1,4 +1,4 @@
-async function fireKey() {
+export default async function fireKey() {
 	//Set key to corresponding code. This one is set to the right arrow key.
 	// left 37
 	var key = 39;

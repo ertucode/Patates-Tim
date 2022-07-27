@@ -1,3 +1,10 @@
+import formatTime from "./utils/formatTime.js";
+import getElement from "./utils/getElement.js";
+import getIndexOfOptions from "./utils/getIndexOfOptions.js";
+import loadStorage, { loadLog } from "./utils/loadStorage.js";
+import { log, warn, inform } from "./utils/log.js";
+import sleep from "./utils/sleep.js";
+
 const TRY_COUNT = 100;
 
 inform("INSERTED");
@@ -40,8 +47,11 @@ async function main() {
 	await checkChapters();
 }
 
+let disabledStreamers, onlyWatchStreamers, skipIntro, skipOutro, mode;
+
 async function checkCurrentPage() {
-	await loadStorage();
+	({ disabledStreamers, onlyWatchStreamers, skipIntro, skipOutro, mode } =
+		await loadStorage());
 
 	if (mode == null || mode === "no-mode") return;
 
@@ -59,7 +69,7 @@ async function checkCurrentPage() {
 
 	log(channelContainer);
 
-	channelName = channelContainer.querySelector("a").innerText;
+	const channelName = channelContainer.querySelector("a").innerText;
 
 	inform("Checking channel name");
 	if (channelName !== "Patates Tim") return;
@@ -82,7 +92,7 @@ async function waitFirstLoad(time) {
 async function expandDescription() {
 	let elementToExpand = null;
 	for (let i = 0; i < 1000; i++) {
-		elementToExpand = elem = document.querySelector(
+		elementToExpand = document.querySelector(
 			"#description-inline-expander"
 		);
 		if (elementToExpand != null) break;
@@ -177,7 +187,6 @@ function checkOutroIntro(timeElements, times, chapterName) {
 	) {
 		inform("Pausing the video");
 		vid.pause();
-		return true;
 	}
 }
 
@@ -185,12 +194,6 @@ function playNextChapter(timeElements, times) {
 	//Get current time
 
 	const currentTime = vid.currentTime;
-
-	/** 
-    fireKey()
-
-    const currentTime = formatTime(document.querySelector(".ytp-time-current").textContent)
-    */
 
 	//Find next time
 
