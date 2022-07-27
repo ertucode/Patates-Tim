@@ -17,10 +17,8 @@ const STORAGE_KEY = {
 	SKIP_OUTRO,
 };
 
-export const LOG_KEY = {
+const LOG_KEY = {
 	LOG,
 	WARN,
 	INFORM,
 };
-
-export default STORAGE_KEY;

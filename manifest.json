@@ -17,7 +17,11 @@
 
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
-        "js": ["content.js"]
+        "js": ["content/utils/fireKey.js", "content/utils/formatTime.js",
+        "content/utils/getElement.js", "content/utils/getIndexOfOptions.js",
+         "content/utils/log.js", "content/utils/setItem.js",
+         "content/utils/sleep.js", "content/utils/zip.js","content/keys.js",
+         "content/load_storage.js","content/content.js"]
     }],
 
     "permissions": [

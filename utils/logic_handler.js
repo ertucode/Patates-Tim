@@ -1,6 +1,7 @@
 import loadStorage from "./load_storage.js";
 import setItem from "./set_storage.js";
 import STORAGE_KEY from "./keys.js";
+import loadLogCheckboxes from "./logging_logic.js";
 
 const disableContainer = document.querySelector("#disabled-streamers");
 const onlyWatchContainer = document.querySelector("#only-watch-streamers");
@@ -42,6 +43,7 @@ let skipIntro;
 let skipOutro;
 
 loadStorage().then(updateItemsAccordingToStorageData);
+loadLogCheckboxes();
 
 function updateItemsAccordingToStorageData(data) {
 	disabledStreamers = data.disabledStreamers;

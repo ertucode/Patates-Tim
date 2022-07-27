@@ -1,4 +1,5 @@
 import STORAGE_KEY from "./keys.js";
+import { LOG_KEY } from "./keys.js";
 
 let storageCache = {};
 
@@ -35,5 +36,23 @@ export default async function loadStorage() {
 		skipIntro,
 		skipOutro,
 		mode,
+	};
+}
+
+export async function loadLog() {
+	await initStorageCache;
+
+	console.log(storageCache);
+
+	const boolLog = storageCache[LOG_KEY.LOG];
+	const boolWarn = storageCache[LOG_KEY.WARN];
+	const boolInform = storageCache[LOG_KEY.INFORM];
+
+	console.log(boolLog, boolWarn, boolInform);
+
+	return {
+		boolLog,
+		boolWarn,
+		boolInform,
 	};
 }

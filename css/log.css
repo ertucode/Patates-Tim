@@ -1,0 +1,11 @@
+#logging-header {
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.log-label {
+    font-size: .75em;
+    font-weight: lighter;
+}
