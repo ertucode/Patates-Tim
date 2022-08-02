@@ -38,7 +38,7 @@ async function main() {
 	log("Currently on Patates Tim:", returnValue);
 	if (!returnValue) return;
 
-	await waitFirstLoad();
+	await waitForPageLoad();
 
 	await expandDescription();
 
@@ -55,21 +55,16 @@ async function checkCurrentPage() {
 
 	if (mode == null || mode === "no-mode") return;
 
-	const channelContainer = await getElement(
-		() => document.querySelector("ytd-channel-name"),
+	inform("Checking if a video is opened");
+	const subElement = await getElement(
+		() => document.querySelector("#owner-sub-count"),
 		TRY_COUNT,
 		250
 	);
 
-	if (channelContainer == null) return;
+	if (subElement == null) return;
 
-	inform("Checking if a video is opened");
-	await sleep(500);
-	if (document.querySelector("#owner-sub-count") == null) return;
-
-	log(channelContainer);
-
-	const channelName = channelContainer.querySelector("a").innerText;
+	const channelName = subElement.previousSibling.querySelector("a").innerText;
 
 	inform("Checking channel name");
 	if (channelName !== "Patates Tim") return;
@@ -80,8 +75,8 @@ async function checkCurrentPage() {
 
 let firstTime = true;
 
-async function waitFirstLoad(time) {
-	inform("waiting for the script to load");
+async function waitForPageLoad(time) {
+	inform("Waiting for the page to load");
 	if (firstTime) {
 		firstTime = false;
 	} else {
