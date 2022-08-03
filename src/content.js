@@ -64,6 +64,8 @@ async function checkCurrentPage() {
 
 	if (subElement == null) return;
 
+	await sleep(2000);
+
 	const channelName = subElement.previousSibling.querySelector("a").innerText;
 
 	inform("Checking channel name");
