@@ -2,7 +2,7 @@ import { loadLog } from "./loadStorage";
 
 let boolInform, boolLog, boolWarn;
 
-async function loadLogPreference() {
+export async function loadLogPreference() {
 	({ boolInform, boolLog, boolWarn } = await loadLog());
 }
 

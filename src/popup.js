@@ -44,7 +44,6 @@ let mode = null;
 let skipIntro;
 let skipOutro;
 
-
 loadStorage().then(updateItemsAccordingToStorageData);
 loadLogCheckboxes();
 
@@ -61,8 +60,9 @@ function updateItemsAccordingToStorageData(data) {
 function handleMode(mode) {
 	if (mode == null) {
 		disableRadio.checked = true;
-		disableRadioClicked();
+		setItem(STORAGE_KEY.MODE, "disabled");
 		onlyWatchBoxContainer.classList.add("blur");
+		disableBoxContainer.classList.remove("blur");
 	} else if (mode === "disabled") {
 		onlyWatchBoxContainer.classList.add("blur");
 		disableRadio.checked = true;

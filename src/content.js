@@ -1,8 +1,10 @@
 import formatTime from "./utils/formatTime.js";
 import getElement from "./utils/getElement.js";
 import getIndexOfOptions from "./utils/getIndexOfOptions.js";
+import STORAGE_KEY from "./utils/keys.js";
 import loadStorage, { loadLog } from "./utils/loadStorage.js";
-import { log, warn, inform } from "./utils/log.js";
+import { log, warn, inform, loadLogPreference } from "./utils/log.js";
+import setItem from "./utils/setItem.js";
 import sleep from "./utils/sleep.js";
 
 const TRY_COUNT = 100;
@@ -13,6 +15,7 @@ const REGEX_FOR_TIME = /\d\d:\d\d/;
 
 let vid;
 let pageChanged = true;
+const storageChanged = [];
 
 async function Main() {
 	await main();
@@ -29,16 +32,38 @@ async function Main() {
 	}
 }
 
+function putButton() {
+	const button = document.createElement("button");
+	button.classList.add("patates-btn");
+	button.addEventListener("click", () => {
+		pageChanged = true;
+		firstTime = true;
+	});
+
+	button.innerHTML =
+		'<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M24 40q-6.65 0-11.325-4.675Q8 30.65 8 24q0-6.65 4.675-11.325Q17.35 8 24 8q4.25 0 7.45 1.725T37 14.45V8h3v12.7H27.3v-3h8.4q-1.9-3-4.85-4.85Q27.9 11 24 11q-5.45 0-9.225 3.775Q11 18.55 11 24q0 5.45 3.775 9.225Q18.55 37 24 37q4.15 0 7.6-2.375 3.45-2.375 4.8-6.275h3.1q-1.45 5.25-5.75 8.45Q29.45 40 24 40Z"/></svg>';
+
+	button.ariaLabel = "Refresh patates";
+	button.title = "Refresh patates";
+
+	const container = document.querySelector("#container #end");
+
+	container.prepend(button);
+
+	// document.body.prepend(button);
+}
+
+putButton();
+
 async function main() {
 	inform("IN MAIN");
 	pageChanged = false;
 
+	await waitForPageLoad(4000);
 	const returnValue = await checkCurrentPage();
 
 	log("Currently on Patates Tim:", returnValue);
 	if (!returnValue) return;
-
-	await waitForPageLoad();
 
 	await expandDescription();
 
@@ -56,6 +81,9 @@ async function checkCurrentPage() {
 	if (mode == null || mode === "no-mode") return;
 
 	inform("Checking if a video is opened");
+
+	if (!window.location.pathname.startsWith("/watch")) return;
+
 	const subElement = await getElement(
 		() => document.querySelector("#owner-sub-count"),
 		TRY_COUNT,
@@ -143,7 +171,7 @@ async function loadChapters() {
 
 async function checkChapters() {
 	inform("STARTING THE LOOP");
-	const { timeElements, times } = await loadChapters();
+	let { timeElements, times } = await loadChapters();
 
 	let chapterName = "";
 	let chapterElem = null;
@@ -164,7 +192,22 @@ async function checkChapters() {
 			}
 		}
 
-		if (pageChanged) break;
+		if (pageChanged) {
+			log("Page changed - Not checking chapters");
+			break;
+		}
+
+		if (storageChanged.length > 0) {
+			({
+				disabledStreamers,
+				onlyWatchStreamers,
+				skipIntro,
+				skipOutro,
+				mode,
+			} = await loadStorage());
+			({ timeElements, times } = await loadChapters());
+			storageChanged.splice(0, 1);
+		}
 
 		await sleep(200);
 	}
@@ -212,11 +255,38 @@ function checkPage(request) {
 		log("CHANGING PAGE");
 		pageChanged = true;
 	}
+
+	if (request.storageChanged === true) {
+		storageChanged.push(1);
+		loadLogPreference();
+	}
 }
 
 chrome.runtime.onMessage.addListener(checkPage);
 
 Main();
+
+document.addEventListener("keydown", (e) => {
+	if (e.key === '"' && e.ctrlKey) {
+		pageChanged = true;
+		firstTime = true;
+	}
+
+	if (e.key === "<" && e.ctrlKey) {
+		const chapterElem = document.querySelector(
+			".ytp-chapter-title-content"
+		);
+		const chapterName = chapterElem?.textContent;
+
+		if (chapterName == null) {
+			return;
+		}
+		setItem(
+			STORAGE_KEY.DISABLED_STREAMERS,
+			JSON.stringify([...disabledStreamers, chapterName])
+		);
+	}
+});
 
 /**
  * YOUTUBE_API

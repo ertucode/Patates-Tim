@@ -1,10 +1,6 @@
 import STORAGE_KEY, { LOG_KEY } from "./keys.js";
 let storageCache = {};
 
-const initStorageCache = getAllStorageSyncData().then((items) => {
-	Object.assign(storageCache, items);
-});
-
 function getAllStorageSyncData() {
 	return new Promise((resolve, reject) => {
 		chrome.storage.sync.get(null, (items) => {
@@ -23,7 +19,9 @@ function parseJSON(item) {
 }
 
 export default async function loadStorage() {
-	await initStorageCache;
+	await getAllStorageSyncData().then((items) => {
+		Object.assign(storageCache, items);
+	});
 
 	const disabledStreamers = parseJSON(
 		storageCache[STORAGE_KEY.DISABLED_STREAMERS]
@@ -46,7 +44,9 @@ export default async function loadStorage() {
 }
 
 export async function loadLog() {
-	await initStorageCache;
+	await getAllStorageSyncData().then((items) => {
+		Object.assign(storageCache, items);
+	});
 
 	const boolLog = storageCache[LOG_KEY.LOG];
 	const boolWarn = storageCache[LOG_KEY.WARN];
